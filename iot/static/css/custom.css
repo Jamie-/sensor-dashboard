@@ -1,0 +1,51 @@
+/* Custom Styles */
+
+.invisi-btn {
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+
+.large-number {
+    text-align: center;
+    font-size: 5em;
+}
+
+/* Icon Sizes */
+.icon-lg {
+    font-size: 30px;
+}
+
+.icon-md {
+    font-size: 25px;
+}
+
+.icon-sm {
+    font-size: 20px;
+}
+
+/* Form errors (mimicking Bootstrap 4) */
+.form-group.has-error > .invalid-feedback {
+    color: #FF4A55;
+}
+
+.has-success .form-control,
+.has-success .form-control:focus {
+    color: #565656;
+    border-color: #87CB16;
+}
+
+.has-error .form-control,
+.has-error .form-control:focus {
+    color: #565656;
+    border-color: #FF4A55;
+}
+
+/* Remove Capitalisation */
+.card label {
+    text-transform: none;
+}
+
+.card .content {
+    padding: 15px;
+}
