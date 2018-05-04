@@ -11,6 +11,10 @@
     font-size: 5em;
 }
 
+.main-pad {
+    padding: 30px 15px;
+}
+
 /* Icon Sizes */
 .icon-lg {
     font-size: 30px;

@@ -1,14 +1,16 @@
 {% extends "template.html" %}
 
+{% block panelnav %}{% include 'navbar.html' %}{% endblock %}
+
 {% block content %}
-    <div class="row">
+    <div class="row main-pad">
 
         <div class="col-md-3">
             <div class="card">
                 <div class="header">
                     <div class="row container-fluid">
                         <h4 class="title">Collections</h4>
-                        <p class="category">Number of different logging collections.</p>
+                        <p class="category">Number of different data collections.</p>
                     </div>
                 </div>
                 <div class="content">

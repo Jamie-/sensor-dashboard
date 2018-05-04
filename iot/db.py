@@ -3,6 +3,9 @@ import flask
 import pymongo
 import datetime
 
+DESCENDING = pymongo.DESCENDING
+ASCENDING = pymongo.ASCENDING
+
 
 def get():
     """Get database instance"""

@@ -11,27 +11,42 @@ def route_index():
     stats = {
         'collections': db.num_collections()
     }
-    return flask.render_template('dashboard.html', stats=stats)
+    return flask.render_template('dashboard.html', title='Dashboard', stats=stats)
+
+
+@app.route('/temperature')
+def route_temp():
+    data = {}
+    for c in db.get().collection_names():
+        data[c] = db.get()[c].find()
+    return flask.render_template('temperature.html', title='Temperature', data=data)
 
 
 # API
-@app.route('/api/log/<string:collection>', methods=['POST'])
-def api_log_add(collection):
-    if not flask.request.json:
-        logger.warning('Request is not valid JSON.')
-        flask.abort(400)
-    try:
-        db.add_record(collection, flask.request.json)
-        return flask.jsonify({'status': 'ok'})
-    except ValueError:
-        logger.warning('Database add threw ValueError.')
-        flask.abort(400)
+@app.route('/api/log/<string:collection>', methods=['GET', 'POST'])
+def api_log(collection):
+    if flask.request.method == 'POST':
+        if not flask.request.json:
+            logger.warning('Request is not valid JSON.')
+            flask.abort(400)
+        try:
+            db.add_record(collection, flask.request.json)
+            return flask.jsonify({'status': 'ok'})
+        except ValueError:
+            logger.warning('Database add threw ValueError.')
+            flask.abort(400)
+    else:
+        data = db.get()[collection].find()
+        return flask.jsonify([{k: v for k, v in d.items() if k != '_id'} for d in data])  # Remove _id from data
 
 
-@app.route('/api/view/<string:collection>')
-def api_view(collection):
-    data = db.get()[collection].find()
-    return flask.jsonify([{k: v for k, v in d.items() if k != '_id'} for d in data])  # Remove _id from data
+@app.route('/api/log/<string:collection>/latest')
+def api_log_max(collection):
+    data = db.get()[collection].find_one(sort=[('timestamp', db.DESCENDING)])
+    if data is not None:
+        return flask.jsonify({k: v for k, v in data.items() if k != '_id'})  # Remove _id from data
+    return flask.jsonify({'error': 'collection has no data'})
+
 
 
 # Error Handlers

@@ -3,6 +3,7 @@ import sys
 import json
 import logging
 import flask
+import time
 
 
 app = flask.Flask(__name__)
@@ -12,6 +13,7 @@ with open('config.json') as f:
     config = json.load(f)
 app.config.update(config)
 app.jinja_env.globals['APP_NAME'] = app.config['APP_NAME']  # Set global app name in Jinja2 too
+app.jinja_env.globals.update(mktime=time.mktime)
 
 # Setup logging
 log_formatter = logging.Formatter('%(asctime)s[%(levelname)8s][%(module)s] %(message)s', datefmt='[%m/%d/%Y][%I:%M:%S %p]')

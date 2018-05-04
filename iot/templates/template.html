@@ -11,9 +11,6 @@
         <!-- Bootstrap core CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        <!-- Animation library for notifications -->
-        <link href="{{ url_for('static', filename='css/animate.min.css') }}" rel="stylesheet"/>
-
         <!-- Light Bootstrap Table core CSS -->
         <link href="{{ url_for('static', filename='css/light-bootstrap-dashboard.css') }}" rel="stylesheet"/>
 
@@ -48,24 +45,19 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        <li {% if request.path == '/temperature' %}class="active"{% endif %}>
+                            <a href="/temperature">
+                                <i class="fa fa-thermometer-half"></i>
+                                <p>Temperature</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <div class="main-panel">
-                <nav class="navbar navbar-default navbar-fixed">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="#">{{ title }}</a>
-                        </div>
-                    </div>
-                </nav>
+
+                {% block panelnav %}{% endblock %}
 
                 <div class="content">
                     <div class="container-fluid">
@@ -73,13 +65,6 @@
                     </div>
                 </div>
 
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <p class="copyright pull-right">
-                            &copy; <a href="http://www.jamiescott.me">Jamie Scott</a>
-                        </p>
-                    </div>
-                </footer>
             </div>
         </div>
 
