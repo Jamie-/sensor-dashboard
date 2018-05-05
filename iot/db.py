@@ -41,3 +41,10 @@ def delete_collection(collection):
     else:
         get().settings.remove({collection: {'$exists': True}})
         return get()[collection].drop()
+
+def total_docs():
+    """Get total number of documents recorded in all non-reserved collections"""
+    total = 0
+    for collection in collection_names():
+        total += get()[collection].count()
+    return total

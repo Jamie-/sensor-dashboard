@@ -9,7 +9,8 @@ logger = logging.getLogger(__name__)
 @app.route('/')
 def route_index():
     stats = {
-        'collections': db.num_collections()
+        'collections': db.num_collections(),
+        'total_documents': db.total_docs()
     }
     return flask.render_template('dashboard.html', title='Dashboard', stats=stats)
 
