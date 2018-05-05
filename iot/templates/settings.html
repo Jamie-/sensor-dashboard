@@ -30,9 +30,9 @@
                                                 <select class="form-control" name="{{ e }}-type">
                                                     <option {% if e in settings and settings[e]['type'] == '' %}selected="selected"{% endif %} value="">None</option>
                                                     <option {% if e in settings and settings[e]['type'] == 'temperature' %}selected="selected"{% endif %} value="temperature">Temperature</option>
+                                                    <option {% if e in settings and settings[e]['type'] == 'power' %}selected="selected"{% endif %} value="power">Power</option>
                                                     <option {% if e in settings and settings[e]['type'] == 'wind' %}selected="selected"{% endif %} value="wind">Wind</option>
                                                     <option {% if e in settings and settings[e]['type'] == 'rain' %}selected="selected"{% endif %} value="rain">Rain</option>
-                                                    <option {% if e in settings and settings[e]['type'] == 'power' %}selected="selected"{% endif %} value="power">Power</option>
                                                 </select>
                                             </td>
                                         </tr>
