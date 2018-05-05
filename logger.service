@@ -1,0 +1,10 @@
+[Unit]
+Description=IoT Logger
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/logger
+ExecStart=/opt/logger/start.sh
+
+[Install]
+WantedBy=multi-user.target
