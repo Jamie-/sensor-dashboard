@@ -18,7 +18,12 @@ def get():
 
 def num_collections():
     """Get number of collections in db defined in config"""
-    return len(get().collection_names())
+    return len(collection_names())
+
+
+def collection_names():
+    """Get names of all collections except settings collection"""
+    return [n for n in get().collection_names() if n != 'settings']
 
 
 def add_record(collection, data):

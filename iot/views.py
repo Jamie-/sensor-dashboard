@@ -17,14 +17,33 @@ def route_index():
 @app.route('/temperature')
 def route_temp():
     data = {}
-    for c in db.get().collection_names():
-        data[c] = db.get()[c].find()
+    for c in db.collection_names():
+        info = db.get().settings.find_one({'{}.type'.format(c): 'temperature'})
+        if info:
+            data[info[c]['name']] = db.get()[c].find()
     return flask.render_template('temperature.html', title='Temperature', data=data, hide_nav=True)
+
+
+@app.route('/settings', methods=['GET', 'POST'])
+def route_settings():
+    if flask.request.method == 'POST':
+        for item in flask.request.form:
+            collection, key = item.split('-')
+            value = flask.request.form[item]
+            db.get().settings.update({collection: {'$exists': True}}, {'$set': {'{}.{}'.format(collection, key): value}}, upsert=True)
+    collections = db.collection_names()
+    settings = {}
+    for e in [{k: v for k, v in d.items() if k != '_id'} for d in db.get().settings.find()]:
+        settings.update(e)
+    return flask.render_template('settings.html', title='Settings', collections=collections, settings=settings)
+
 
 
 # API
 @app.route('/api/log/<string:collection>', methods=['GET', 'POST'])
 def api_log(collection):
+    if collection.lower() == 'settings':  # Reserve settings collection
+        return flask.jsonify({'error': 'collection is reserved'}), 400
     if flask.request.method == 'POST':
         if not flask.request.json:
             logger.warning('Request is not valid JSON.')
@@ -42,6 +61,8 @@ def api_log(collection):
 
 @app.route('/api/log/<string:collection>/latest')
 def api_log_max(collection):
+    if collection.lower() == 'settings':  # Reserve settings collection
+        return flask.jsonify({'error': 'collection is reserved'}), 400
     data = db.get()[collection].find_one(sort=[('timestamp', db.DESCENDING)])
     if data is not None:
         return flask.jsonify({k: v for k, v in data.items() if k != '_id'})  # Remove _id from data

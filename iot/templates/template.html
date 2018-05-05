@@ -51,6 +51,12 @@
                                 <p>Temperature</p>
                             </a>
                         </li>
+                        <li {% if request.path == '/settings' %}class="active"{% endif %}>
+                            <a href="/settings">
+                                <i class="fa fa-cog"></i>
+                                <p>Settings</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

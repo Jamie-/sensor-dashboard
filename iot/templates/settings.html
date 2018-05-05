@@ -1,0 +1,56 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <div class="row main-pad">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <div class="row container-fluid">
+                        <h4 class="title">Data Categorisation</h4>
+                    </div>
+                </div>
+                <div class="content container-fluid">
+                    <form method="post">
+                        <table class="table table-responsive table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if collections is not none %}
+                                    {% for e in collections %}
+                                        <tr>
+                                            <td>{{ e }}</td>
+                                            <td><input class="form-control" name="{{ e }}-name" type="text" placeholder="Pretty Name" value="{% if e in settings %}{{ settings[e]['name'] }}{% endif %}"></td>
+                                            <td>
+                                                <select class="form-control" name="{{ e }}-type">
+                                                    <option {% if e in settings and settings[e]['type'] == '' %}selected="selected"{% endif %} value="">None</option>
+                                                    <option {% if e in settings and settings[e]['type'] == 'temperature' %}selected="selected"{% endif %} value="temperature">Temperature</option>
+                                                    <option {% if e in settings and settings[e]['type'] == 'wind' %}selected="selected"{% endif %} value="wind">Wind</option>
+                                                    <option {% if e in settings and settings[e]['type'] == 'rain' %}selected="selected"{% endif %} value="rain">Rain</option>
+                                                    <option {% if e in settings and settings[e]['type'] == 'power' %}selected="selected"{% endif %} value="power">Power</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-fill btn-success">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
