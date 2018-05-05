@@ -19,7 +19,7 @@ def route_temp():
     data = {}
     for c in db.get().collection_names():
         data[c] = db.get()[c].find()
-    return flask.render_template('temperature.html', title='Temperature', data=data)
+    return flask.render_template('temperature.html', title='Temperature', data=data, hide_nav=True)
 
 
 # API

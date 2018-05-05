@@ -53,3 +53,15 @@
 .card .content {
     padding: 15px;
 }
+
+/* Mobile Display */
+.hide-navbar {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .hide-navbar {
+        display: block;
+    }
+}
+

@@ -103,7 +103,7 @@ lbd = {
             mobile_menu_content = '';
 
             nav_content = $navbar;
-
+            if (nav_content === undefined) { nav_content = ''; } // Fix for cases where .navbar-collapse doesn't exist
             nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
 
             // navbar_form = $('nav').find('.navbar-form').get(0).outerHTML;
