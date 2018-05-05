@@ -1,0 +1,7 @@
+{
+  "APP_NAME": "System Name",
+  "MONGO_URI": "localhost",
+  "MONGO_DB": "logging",
+  "LOG_LEVEL": "info",
+  "LOG_FILE_PATH": "log.log"
+}
