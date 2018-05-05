@@ -28,13 +28,13 @@ def api_log(collection):
     if flask.request.method == 'POST':
         if not flask.request.json:
             logger.warning('Request is not valid JSON.')
-            flask.abort(400)
+            return flask.jsonify({'error': 'request is not valid json'}), 400
         try:
             db.add_record(collection, flask.request.json)
             return flask.jsonify({'status': 'ok'})
         except ValueError:
             logger.warning('Database add threw ValueError.')
-            flask.abort(400)
+            return flask.jsonify({'error': 'error inserting record'}), 400
     else:
         data = db.get()[collection].find()
         return flask.jsonify([{k: v for k, v in d.items() if k != '_id'} for d in data])  # Remove _id from data
@@ -45,7 +45,7 @@ def api_log_max(collection):
     data = db.get()[collection].find_one(sort=[('timestamp', db.DESCENDING)])
     if data is not None:
         return flask.jsonify({k: v for k, v in data.items() if k != '_id'})  # Remove _id from data
-    return flask.jsonify({'error': 'collection has no data'})
+    return flask.jsonify({'error': 'collection has no data'}), 404
 
 
 
