@@ -51,6 +51,24 @@
                                 <p>Temperature</p>
                             </a>
                         </li>
+                        <li {% if request.path == '/power' %}class="active"{% endif %}>
+                            <a href="/power">
+                                <i class="fa fa-bolt"></i>
+                                <p>Power</p>
+                            </a>
+                        </li>
+                        <li {% if request.path == '/wind' %}class="active"{% endif %}>
+                            <a href="/wind">
+                                <i class="fa fa-certificate"></i>
+                                <p>Wind Speed</p>
+                            </a>
+                        </li>
+                        <li {% if request.path == '/rain' %}class="active"{% endif %}>
+                            <a href="/rain">
+                                <i class="fa fa-tint"></i>
+                                <p>Rainfall</p>
+                            </a>
+                        </li>
                         <li {% if request.path == '/settings' %}class="active"{% endif %}>
                             <a href="/settings">
                                 <i class="fa fa-cog"></i>

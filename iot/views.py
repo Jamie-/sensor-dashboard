@@ -24,6 +24,21 @@ def route_temp():
     return flask.render_template('temperature.html', title='Temperature', data=data, hide_nav=True)
 
 
+@app.route('/power')
+def route_power():
+    return flask.render_template('notimplemented.html', title='Power')
+
+
+@app.route('/wind')
+def route_wind():
+    return flask.render_template('notimplemented.html', title='Wind Speed')
+
+
+@app.route('/rain')
+def route_rain():
+    return flask.render_template('notimplemented.html', title='Rainfall')
+
+
 @app.route('/settings', methods=['GET', 'POST'])
 def route_settings():
     if flask.request.method == 'POST':
