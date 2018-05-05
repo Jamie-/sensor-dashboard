@@ -17,15 +17,15 @@
 
 /* Icon Sizes */
 .icon-lg {
-    font-size: 30px;
+    font-size: 30px !important;
 }
 
 .icon-md {
-    font-size: 25px;
+    font-size: 25px !important;
 }
 
 .icon-sm {
-    font-size: 20px;
+    font-size: 20px !important;
 }
 
 /* Form errors (mimicking Bootstrap 4) */

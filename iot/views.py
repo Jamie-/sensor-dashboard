@@ -50,8 +50,27 @@ def route_settings():
     settings = {}
     for e in [{k: v for k, v in d.items() if k != '_id'} for d in db.get().settings.find()]:
         settings.update(e)
-    return flask.render_template('settings.html', title='Settings', collections=collections, settings=settings)
+    return flask.render_template('settings.html', title='Collection Categories', collections=collections, settings=settings)
 
+
+@app.route('/settings/manage', methods=['GET', 'POST'])
+def route_manage():
+    collections = db.collection_names()
+    settings = {}
+    for e in [{k: v for k, v in d.items() if k != '_id'} for d in db.get().settings.find()]:
+        settings.update(e)
+    return flask.render_template('manage.html', title='Manage Collections', collections=collections, settings=settings)
+
+
+@app.route('/settings/manage/delete', methods=['POST'])
+def route_delete():
+    if 'collection' not in flask.request.form:
+        flask.abort(400)
+    try:
+        db.delete_collection(flask.request.form['collection'])
+        return 'OK'
+    except ValueError:
+        flask.abort(400)
 
 
 # API

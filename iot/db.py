@@ -32,3 +32,12 @@ def add_record(collection, data):
         raise ValueError("Timestamp must not be specified.")
     data['timestamp'] = datetime.datetime.now()
     return get()[collection].insert_one(data)
+
+
+def delete_collection(collection):
+    """Delete a collection and remove collection's data from settings"""
+    if collection == 'settings':
+        raise ValueError('Reserved collections may not be deleted.')
+    else:
+        get().settings.remove({collection: {'$exists': True}})
+        return get()[collection].drop()
