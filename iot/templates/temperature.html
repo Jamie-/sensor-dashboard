@@ -28,7 +28,8 @@
                                         },
                                     {% endfor %}
                                 ],
-                                borderColor: Colors.random(),
+                                borderColor: '#{% if r in settings %}{{ settings[r]['color'] }}{% else %}000000{% endif %}',
+                                backgroundColor: '#{% if r in settings %}{{ settings[r]['color'] }}{% else %}000000{% endif %}',
                                 fill: false
                             },
                         {% endfor %}

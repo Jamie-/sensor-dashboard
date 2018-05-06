@@ -18,11 +18,14 @@ def route_index():
 @app.route('/temperature')
 def route_temp():
     data = {}
+    raw_settings = db.get_settings()
+    settings = {}
     for c in db.collection_names():
         info = db.get().settings.find_one({'{}.type'.format(c): 'temperature'})
         if info:
             data[info[c]['name']] = db.get()[c].find()
-    return flask.render_template('temperature.html', title='Temperature', data=data, hide_nav=True)
+            settings[info[c]['name']] = raw_settings[c]
+    return flask.render_template('temperature.html', title='Temperature', data=data, settings=settings, hide_nav=True)
 
 
 @app.route('/power')
@@ -48,9 +51,7 @@ def route_settings():
             value = flask.request.form[item]
             db.get().settings.update({collection: {'$exists': True}}, {'$set': {'{}.{}'.format(collection, key): value}}, upsert=True)
     collections = db.collection_names()
-    settings = {}
-    for e in [{k: v for k, v in d.items() if k != '_id'} for d in db.get().settings.find()]:
-        settings.update(e)
+    settings = db.get_settings()
     return flask.render_template('settings.html', title='Collection Categories', collections=collections, settings=settings)
 
 

@@ -28,6 +28,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Type</th>
+                                    <th style="width: 100px;">Colour</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +46,7 @@
                                                     <option {% if e in settings and settings[e]['type'] == 'rain' %}selected="selected"{% endif %} value="rain">Rain</option>
                                                 </select>
                                             </td>
+                                            <td><input name="{{ e }}-color" class="form-control jscolor" value="{% if e in settings %}{{ settings[e]['color'] }}{% else %}000000{% endif %}"></td>
                                         </tr>
                                     {% endfor %}
                                 {% endif %}
