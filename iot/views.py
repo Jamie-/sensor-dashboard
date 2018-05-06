@@ -76,6 +76,11 @@ def route_delete():
 
 
 # API
+@app.route('/api/log')
+def api_collections():
+    return flask.jsonify({'collections': db.collection_names()})
+
+
 @app.route('/api/log/<string:collection>', methods=['GET', 'POST'])
 def api_log(collection):
     if collection.lower() == 'settings':  # Reserve settings collection
