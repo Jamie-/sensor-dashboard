@@ -1,5 +1,6 @@
 import logging
 import flask
+import datetime
 from iot import app
 from iot import db
 
@@ -20,10 +21,18 @@ def route_temp():
     data = {}
     raw_settings = db.get_settings()
     settings = {}
+    age = flask.request.args.get('age')  # Age is time in hours to get
+    if age is not None:
+        try:
+            age = int(age)
+        except ValueError:
+            flask.abort(400)
+    else:
+        age = 7 * 24
     for c in db.collection_names():
         info = db.get().settings.find_one({'{}.type'.format(c): 'temperature'})
         if info:
-            data[info[c]['name']] = db.get()[c].find()
+            data[info[c]['name']] = db.get()[c].find({'timestamp': {'$gte': datetime.datetime.now() - datetime.timedelta(hours=age)}})
             settings[info[c]['name']] = raw_settings[c]
     return flask.render_template('temperature.html', title='Temperature', data=data, settings=settings, hide_nav=True)
 
