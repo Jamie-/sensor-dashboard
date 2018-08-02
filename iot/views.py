@@ -70,6 +70,8 @@ def route_manage():
     settings = {}
     for e in [{k: v for k, v in d.items() if k != '_id'} for d in db.get().settings.find()]:
         settings.update(e)
+    for e in settings:  # Add number of data points for each collection to it's settings
+        settings[e].update({'qty': db.get()[e].count()})
     return flask.render_template('manage.html', title='Manage Collections', collections=collections, settings=settings)
 
 

@@ -27,6 +27,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Data Points</th>
                                     <th width="100%"></th>
                                 </tr>
                             </thead>
@@ -36,6 +37,7 @@
                                         <tr>
                                             <td>{{ e }}</td>
                                             <td>{% if e in settings %}{{ settings[e]['name'] }}{% endif %}</td>
+                                            <td>{{ settings[e]['qty'] }}</td>
                                             <td>
                                                 <button type="button" class="invisi-btn" onclick="removeCollection('{{ e }}')" title="Remove Collection" style="margin-left:auto;margin-right:0;display:block;">
                                                     <i class="icon-md text-danger fa fa-trash"></i>
