@@ -3,5 +3,6 @@
   "MONGO_URI": "localhost",
   "MONGO_DB": "logging",
   "LOG_LEVEL": "info",
-  "LOG_FILE_PATH": "log.log"
+  "LOG_FILE_PATH": "log.log",
+  "SECRET_KEY": "aSecretKey!"
 }
