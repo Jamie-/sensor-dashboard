@@ -67,12 +67,15 @@ def route_settings():
 @app.route('/settings/manage', methods=['GET', 'POST'])
 def route_manage():
     collections = db.collection_names()
+    # Get metadata (from settings) for each collection
     settings = {}
     for e in [{k: v for k, v in d.items() if k != '_id'} for d in db.get().settings.find()]:
         settings.update(e)
-    for e in settings:  # Add number of data points for each collection to it's settings
-        settings[e].update({'qty': db.get()[e].count()})
-    return flask.render_template('manage.html', title='Manage Collections', collections=collections, settings=settings)
+    # Get number of data points for each collection
+    qtys = {}
+    for c in collections:
+        qtys[c] = db.get()[c].count()
+    return flask.render_template('manage.html', title='Manage Collections', collections=collections, settings=settings, qtys=qtys)
 
 
 @app.route('/settings/manage/delete', methods=['POST'])
