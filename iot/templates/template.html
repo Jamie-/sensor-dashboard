@@ -9,9 +9,9 @@
         <meta name="viewport" content="width=device-width" />
 
         <!-- Bootstrap core CSS -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-        <!-- Light Bootstrap Table core CSS -->
+        <!-- Light Bootstrap Dashboard core CSS -->
         <link href="{{ url_for('static', filename='css/light-bootstrap-dashboard.css') }}" rel="stylesheet"/>
 
         <!-- Custom Workbench CSS -->
@@ -31,8 +31,8 @@
     <body>
 
         <div class="wrapper">
-            <div class="sidebar" data-color="orange" data-image="{{ url_for('static', filename='img/sidebar.jpg') }}">
 
+            <div class="sidebar" data-color="orange" data-image="{{ url_for('static', filename='img/sidebar.jpg') }}">
                 <div class="sidebar-wrapper">
                     <div class="logo">
                         <h3>{{ APP_NAME }}</h3>
@@ -40,37 +40,37 @@
 
                     <ul class="nav">
                         <li {% if request.path == '/' %}class="active"{% endif %}>
-                            <a href="/">
+                            <a class="nav-link" href="/">
                                 <i class="fa fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li {% if request.path == '/temperature' %}class="active"{% endif %}>
-                            <a href="/temperature">
+                            <a class="nav-link" href="/temperature">
                                 <i class="fa fa-thermometer-half"></i>
                                 <p>Temperature</p>
                             </a>
                         </li>
                         <li {% if request.path == '/power' %}class="active"{% endif %}>
-                            <a href="/power">
+                            <a class="nav-link" href="/power">
                                 <i class="fa fa-bolt"></i>
                                 <p>Power</p>
                             </a>
                         </li>
                         <li {% if request.path == '/wind' %}class="active"{% endif %}>
-                            <a href="/wind">
+                            <a class="nav-link" href="/wind">
                                 <i class="fa fa-certificate"></i>
                                 <p>Wind Speed</p>
                             </a>
                         </li>
                         <li {% if request.path == '/rain' %}class="active"{% endif %}>
-                            <a href="/rain">
+                            <a class="nav-link" href="/rain">
                                 <i class="fa fa-tint"></i>
                                 <p>Rainfall</p>
                             </a>
                         </li>
                         <li {% if request.path == '/settings' %}class="active"{% endif %}>
-                            <a href="/settings">
+                            <a class="nav-link" href="/settings">
                                 <i class="fa fa-cog"></i>
                                 <p>Settings</p>
                             </a>
@@ -80,25 +80,20 @@
             </div>
 
             <div class="main-panel">
-                <nav class="navbar navbar-default navbar-fixed {% if hide_nav is defined and hide_nav %}hide-navbar{% endif %}">
+                <nav class="navbar navbar-expand-lg {% if hide_nav is defined and hide_nav %}hide-navbar{% endif %}">
                     <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="{{ request.path }}">{{ title }}</a>
-                        </div>
+                        <a class="navbar-brand" href="{{ request.path }}">{{ title }}</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-bar burger-lines"></span>
+                            <span class="navbar-toggler-bar burger-lines"></span>
+                            <span class="navbar-toggler-bar burger-lines"></span>
+                        </button>
                         {% block navpanel %}{% endblock %}
                     </div>
                 </nav>
 
-                <div class="content">
-                    <div class="container-fluid">
-                        {% block content %}{% endblock %}
-                    </div>
+                <div class="container-fluid">
+                    {% block content %}{% endblock %}
                 </div>
 
             </div>
@@ -106,13 +101,15 @@
 
         <!--   Core JS Files   -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <!--  Notifications Plugin    -->
         <script src="{{ url_for('static', filename='js/bootstrap-notify.js') }}"></script>
 
-        <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+        <!-- Light Bootstrap Dashboard Core JavaScript -->
         <script src="{{ url_for('static', filename='js/light-bootstrap-dashboard.js') }}"></script>
+
+        <!-- jQuery Colour Picker -->
         <script src="{{ url_for('static', filename='js/jscolor.js') }}"></script>
 
         <!-- Alert messages -->

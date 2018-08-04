@@ -2,75 +2,97 @@
 
 {% block content %}
     {% if data|length > 0 %}
-    <h3 class="text-center">Temperature</h3>
-    <canvas id="tempChart" style="width: 100%; height: 100%;"></canvas>
+        <h3 class="text-center">Temperature</h3>
+        <hr>
+        <form class="row" id="filters">
+            <div class="col-md-auto">
+                <div class="row">
+                    <label class="col-md-auto col-form-label" for="age">Timespan</label>
+                    <select class="form-control col" id="age" name="age"><!-- {{ filters }} -->
+                        <option {% if 'age' in filters and filters['age'] == 672 %}selected{% endif %} value="672">One Month</option>
+                        <option {% if 'age' in filters and filters['age'] == 336 %}selected{% endif %} value="336">Fortnight</option>
+                        <option {% if 'age' in filters and filters['age'] == 168 %}selected{% endif %} value="168">One Week</option>
+                        <option {% if 'age' in filters and filters['age'] == 120 %}selected{% endif %} value="120">5 days</option>
+                        <option {% if 'age' in filters and filters['age'] == 48 %}selected{% endif %} value="48">2 days</option>
+                        <option {% if 'age' in filters and filters['age'] == 24 %}selected{% endif %} value="24">1 day</option>
+                        <option {% if 'age' in filters and filters['age'] == 12 %}selected{% endif %} value="12">12 hours</option>
+                        <option {% if 'age' in filters and filters['age'] == 1 %}selected{% endif %} value="1">1 hour</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-fill btn-primary">Apply</button>
+            </div>
+        </form>
+        <hr>
+        <canvas id="tempChart" style="width: 100%; height: 100%;"></canvas>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
-    <script src="static/js/date.format.js"></script>
-    <script src="static/js/functions.js"></script>
-    <script>
-        window.onload = function() {
-            var ctx = $('#tempChart');
-            var powerChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    datasets: [
-                        {% for r in data %}
-                            {
-                                borderWidth: 1,
-                                label: '{{ r }}',
-                                data: [
-                                    {% for e in data[r] %}
-                                        {
-                                            x: new Date(parseInt({{ mktime(e['timestamp'].timetuple()) }}) * 1000),
-                                            y: roundHalf({{ e['temperature'] }})
-                                        },
-                                    {% endfor %}
-                                ],
-                                borderColor: '#{% if r in settings %}{{ settings[r]['color'] }}{% else %}000000{% endif %}',
-                                backgroundColor: '#{% if r in settings %}{{ settings[r]['color'] }}{% else %}000000{% endif %}',
-                                fill: false
-                            },
-                        {% endfor %}
-                    ]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                labelString: 'Temperature /C',
-                                display: true
-                            },
-                            ticks: {
-                                min: -5,
-                                max: 40,
-                                stepSize: 5
-                            }
-                        }],
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                //unit: 'hour', // Force axis unit
-                                displayFormats: {
-                                    hour: 'ddd Do ha'
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+        <script src="static/js/date.format.js"></script>
+        <script src="static/js/functions.js"></script>
+        <script>
+            window.onload = function() {
+                var ctx = $('#tempChart');
+                var powerChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [
+                            {% for r in data %}
+                                {
+                                    borderWidth: 1,
+                                    label: '{{ r }}',
+                                    data: [
+                                        {% for e in data[r] %}
+                                            {
+                                                x: new Date(parseInt({{ mktime(e['timestamp'].timetuple()) }}) * 1000),
+                                                y: roundHalf({{ e['temperature'] }})
+                                            },
+                                        {% endfor %}
+                                    ],
+                                    borderColor: '#{% if r in settings %}{{ settings[r]['color'] }}{% else %}000000{% endif %}',
+                                    backgroundColor: '#{% if r in settings %}{{ settings[r]['color'] }}{% else %}000000{% endif %}',
+                                    fill: false
                                 },
-                                tooltipFormat: 'Do MMMM YYYY, h:mm:ss A'
-                            }
-                        }]
+                            {% endfor %}
+                        ]
                     },
-                    elements: {
-                        line: {
-                            tension: 0.000001
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    labelString: 'Temperature /C',
+                                    display: true
+                                },
+                                ticks: {
+                                    min: -5,
+                                    max: 40,
+                                    stepSize: 5
+                                }
+                            }],
+                            xAxes: [{
+                                type: 'time',
+                                time: {
+                                    //unit: 'hour', // Force axis unit
+                                    displayFormats: {
+                                        hour: 'ddd Do ha'
+                                    },
+                                    tooltipFormat: 'Do MMMM YYYY, h:mm:ss A'
+                                }
+                            }]
                         },
-                        point: {
-                            radius: 0
+                        elements: {
+                            line: {
+                                tension: 0.000001
+                            },
+                            point: {
+                                radius: 0
+                            }
                         }
                     }
-                }
-            });
-        };
-    </script>
+                });
+            };
+        </script>
     {% else %}
         <div class="row text-center">
             <h2>No collections defined for temperature.</h2>
